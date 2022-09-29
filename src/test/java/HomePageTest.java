@@ -19,7 +19,7 @@ public class HomePageTest {
     @BeforeTest
     public void setup(){
         extent = new ExtentReports();
-        String HTML_REPORT_PATH = "target//html/ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
+        String HTML_REPORT_PATH = "target//ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
         htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
         extent.attachReporter(htmlReporter);
         htmlReporter.loadXMLConfig("src/main/resources/extent-config.xml");
@@ -31,7 +31,7 @@ public class HomePageTest {
     }
 
     @Test
-    public void loginTest() throws InterruptedException {
+    public void testHappyPathLogin() throws InterruptedException {
         extentTest = extent.createTest("Shop.kz Login Test");
         LoginPage loginPage = new LoginPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
@@ -41,6 +41,23 @@ public class HomePageTest {
         loginPage.openSignIn();
         Thread.sleep(2000);
         loginPage.signIn();
+        Thread.sleep(2000);
+
+        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
+        Assert.assertEquals(loginPage.getProfileName(), fullname);
+    }
+
+    @Test
+    public void testUnHappyPathLogin() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Login Test");
+        LoginPage loginPage = new LoginPage(driver);
+        driver.get(ConfigProperties.getProperty("mainURL"));
+        Thread.sleep(2000);
+        loginPage.clearAd();
+        Thread.sleep(1000);
+        loginPage.openSignIn();
+        Thread.sleep(2000);
+        loginPage.signInUnhappy("arexoff@mail.com", "12345678");
         Thread.sleep(2000);
 
         String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");

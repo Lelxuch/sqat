@@ -1,7 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.xml.dom.OnElement;
 import utils.ConfigProperties;
 
 public class LoginPage {
@@ -34,6 +33,14 @@ public class LoginPage {
         emailField.sendKeys(ConfigProperties.getProperty("email"));
         WebElement passwordField = driver.findElement(passwordBy);
         passwordField.sendKeys(ConfigProperties.getProperty("password"));
+        driver.findElement(loginBtnBy).click();
+    }
+
+    public void signInUnhappy(String nameKey, String surnameKey){
+        WebElement emailField = driver.findElement(emailBy);
+        emailField.sendKeys(nameKey);
+        WebElement passwordField = driver.findElement(passwordBy);
+        passwordField.sendKeys(surnameKey);
         driver.findElement(loginBtnBy).click();
     }
 
