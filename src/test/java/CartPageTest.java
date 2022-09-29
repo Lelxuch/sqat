@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class LoginPageTest {
+public class CartPageTest {
     public static WebDriver driver;
     public static ExtentReports extent;
     public static ExtentHtmlReporter htmlReporter;
@@ -31,9 +31,10 @@ public class LoginPageTest {
     }
 
     @Test
-    public void testHappyPathLogin() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Login Test");
+    public void addItemToCart() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Adding Item to Cart Test");
         LoginPage loginPage = new LoginPage(driver);
+        CartPage cartPage = new CartPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
         Thread.sleep(2000);
         loginPage.clearAd();
@@ -43,25 +44,28 @@ public class LoginPageTest {
         loginPage.signIn();
         Thread.sleep(2000);
 
-        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
-        Assert.assertEquals(loginPage.getProfileName(), fullname);
+        cartPage.addItemToCart();
+
+        Assert.assertEquals(cartPage.getItemNameFromCart(), "Ноутбук ASUS VivoBook Pro 16X M7600QC, OLED (90NB0V81-M01630)");
     }
 
     @Test
-    public void testUnHappyPathLogin() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz UnhappyPath Login Test");
+    public void deleteItemFromCart() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Deleting Item from Cart Test");
         LoginPage loginPage = new LoginPage(driver);
+        CartPage cartPage = new CartPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
         Thread.sleep(2000);
         loginPage.clearAd();
         Thread.sleep(1000);
         loginPage.openSignIn();
         Thread.sleep(2000);
-        loginPage.signInUnhappy("arexoff@mail.com", "12345678");
+        loginPage.signIn();
         Thread.sleep(2000);
 
-        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
-        Assert.assertEquals(loginPage.getProfileName(), fullname);
+        cartPage.deleteItemFromCart();
+
+        Assert.assertTrue(cartPage.isDisplayedItemNameFromCart());
     }
 
 
