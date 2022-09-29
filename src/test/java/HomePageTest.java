@@ -4,6 +4,7 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -18,24 +19,41 @@ public class HomePageTest {
     @BeforeTest
     public void setup(){
         extent = new ExtentReports();
-        String HTML_REPORT_PATH = "ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
+        String HTML_REPORT_PATH = "target//html/ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
         htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
         extent.attachReporter(htmlReporter);
-        htmlReporter.loadXMLConfig("src/test/resources/extent-config.xml");
+        htmlReporter.loadXMLConfig("src/main/resources/extent-config.xml");
         extent.setSystemInfo("Hostname", ConfigProperties.getProperty("mainURL"));
         extent.setSystemInfo("Execution Environment", "Staging");
         extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
         WebDriverManager.chromedriver().setup();
         driver  = new ChromeDriver();
-
     }
 
     @Test
-    public void homeTesting() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Registration Test");
-        HomePage home = new HomePage(driver);
+    public void loginTest() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Login Test");
+        LoginPage loginPage = new LoginPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
+        Thread.sleep(2000);
+        loginPage.clearAd();
+        Thread.sleep(1000);
+        loginPage.openSignIn();
+        Thread.sleep(2000);
+        loginPage.signIn();
+        Thread.sleep(2000);
 
+        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
+        Assert.assertEquals(loginPage.getProfileName(), fullname);
+    }
+
+    @Test
+    public void registrationTest() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Registration Test");
+        RegisterPage registerPage = new RegisterPage(driver);
+//        driver.get(ConfigProperties.getProperty("mainURL"));
+//        registerPage.goToSignUpPage();
+//        registerPage.signUp();
 
 //        home.setLocation();
 //        Thread.sleep(2000);
@@ -48,41 +66,15 @@ public class HomePageTest {
 //       home.setSearchField();
 //       home.typeKeyword("клавиатура");
 //       Thread.sleep(3000);
-//       home.setKewboard();
+//       home.setKeyboard();
 //       Thread.sleep(3000);
 //        home.setSearchField();
 //        home.tKeyword("macbook");
 //        Thread.sleep(3000);
 
-//        home.openSignIn();
-//        Thread.sleep(3000);
-//        home.emailField("merey0903@gmail.com");
-//        Thread.sleep(3000);
-//        home.setPasswordField("Merey0903");
-//        Thread.sleep(3000);
-//        home.loginButton();
-//        Thread.sleep(4000);
-
-        home.signUp();
-        Thread.sleep(3000);
-        home.setName("Merey");
-        Thread.sleep(3000);
-        home.setSurname("Orynbassar");
-        Thread.sleep(3000);
-        home.setEmail("overexm@gmail.com");
-        Thread.sleep(3000);
-        home.setPhone("77472646428");
-        Thread.sleep(3000);
-        home.setPassword("Testing123");
-        Thread.sleep(3000);
-        home.confirmPassword("Testing123");
-        Thread.sleep(3000);
-        home.registerBtn();
-        Thread.sleep(3000);
-
-
-
     }
+
+
 
     @AfterTest
     public void tearDown(){

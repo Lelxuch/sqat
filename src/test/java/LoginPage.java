@@ -1,0 +1,44 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.xml.dom.OnElement;
+import utils.ConfigProperties;
+
+public class LoginPage {
+    protected WebDriver driver;
+
+    public LoginPage(WebDriver driver){
+        this.driver = driver;
+    }
+
+    private By signInLinkBy = By.xpath("//a[@id='btn_show_auth']");
+    private By oneTimeBy = By.id("onesignal-slidedown-cancel-button");
+    private By emailBy = By.id("ppUSER_LOGIN");
+    private By passwordBy = By.id("ppUSER_PASSWORD");
+    private By loginBtnBy = By.id("login_btn");
+    private By profileNameBy = By.xpath("//span[contains(text(), 'Merey Orynbassar')]");
+
+    public void openSignIn(){
+        driver.findElement(signInLinkBy).click();
+    }
+
+    public void clearAd(){
+        WebElement ad = driver.findElement(oneTimeBy);
+        if(ad.isDisplayed()){
+            ad.click();
+        }
+    }
+
+    public void signIn(){
+        WebElement emailField = driver.findElement(emailBy);
+        emailField.sendKeys(ConfigProperties.getProperty("email"));
+        WebElement passwordField = driver.findElement(passwordBy);
+        passwordField.sendKeys(ConfigProperties.getProperty("password"));
+        driver.findElement(loginBtnBy).click();
+    }
+
+    public String getProfileName() {
+        WebElement profileName = driver.findElement(profileNameBy);
+        return profileName.getText();
+    }
+}
