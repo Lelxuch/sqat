@@ -1,3 +1,6 @@
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,10 +10,21 @@ import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
 public class HomePageTest {
+    public static WebDriver driver;
+    public static ExtentReports extent;
+    public static ExtentHtmlReporter htmlReporter;
+    public static ExtentTest extentTest;
 
-    WebDriver driver;
     @BeforeTest
     public void setup(){
+        extent = new ExtentReports();
+        String HTML_REPORT_PATH = "ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
+        htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
+        extent.attachReporter(htmlReporter);
+        htmlReporter.loadXMLConfig("src/test/resources/extent-config.xml");
+        extent.setSystemInfo("Hostname", ConfigProperties.getProperty("mainURL"));
+        extent.setSystemInfo("Execution Environment", "Staging");
+        extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
         WebDriverManager.chromedriver().setup();
         driver  = new ChromeDriver();
 
@@ -18,6 +32,7 @@ public class HomePageTest {
 
     @Test
     public void homeTesting() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Registration Test");
         HomePage home = new HomePage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
 
@@ -70,7 +85,8 @@ public class HomePageTest {
     }
 
     @AfterTest
-    public void closeDriver(){
+    public void tearDown(){
+        extent.flush();
         driver.quit();
     }
 }
