@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class HomePageTest {
+public class LoginPageTest {
     public static WebDriver driver;
     public static ExtentReports extent;
     public static ExtentHtmlReporter htmlReporter;
@@ -30,21 +30,39 @@ public class HomePageTest {
         driver  = new ChromeDriver();
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //ADD HERE TEST CASES RELATED TO HomePage OR CREATE ANOTHER CLASSES
-    //EXAMPLE:
-//    @Test
-//    public void testSomeUnHappyPath() throws InterruptedException {
-//        extentTest = extent.createTest("Shop.kz SOME_TEST_CASE_NAME Test");
-//        SomePage somePage = new SomePage(driver);
-//        driver.get(ConfigProperties.getProperty("mainURL"));
-//        Thread.sleep(2000);
-//        somePage.testCase1();
-//
-//        Assert.assertEquals(String actual, String expected); //OR
-//        Assert.assertTrue();
-//    }
-    ////////////////////////////////////////////////////////////////////////////////////////
+    @Test
+    public void testHappyPathLogin() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Login Test");
+        LoginPage loginPage = new LoginPage(driver);
+        driver.get(ConfigProperties.getProperty("mainURL"));
+        Thread.sleep(2000);
+        loginPage.clearAd();
+        Thread.sleep(1000);
+        loginPage.openSignIn();
+        Thread.sleep(2000);
+        loginPage.signIn();
+        Thread.sleep(2000);
+
+        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
+        Assert.assertEquals(loginPage.getProfileName(), fullname);
+    }
+
+    @Test
+    public void testUnHappyPathLogin() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Login Test");
+        LoginPage loginPage = new LoginPage(driver);
+        driver.get(ConfigProperties.getProperty("mainURL"));
+        Thread.sleep(2000);
+        loginPage.clearAd();
+        Thread.sleep(1000);
+        loginPage.openSignIn();
+        Thread.sleep(2000);
+        loginPage.signInUnhappy("arexoff@mail.com", "12345678");
+        Thread.sleep(2000);
+
+        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
+        Assert.assertEquals(loginPage.getProfileName(), fullname);
+    }
 
 
     @AfterTest

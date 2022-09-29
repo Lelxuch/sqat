@@ -4,13 +4,12 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class HomePageTest {
+public class RegisterPageTest {
     public static WebDriver driver;
     public static ExtentReports extent;
     public static ExtentHtmlReporter htmlReporter;
@@ -30,22 +29,32 @@ public class HomePageTest {
         driver  = new ChromeDriver();
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //ADD HERE TEST CASES RELATED TO HomePage OR CREATE ANOTHER CLASSES
-    //EXAMPLE:
-//    @Test
-//    public void testSomeUnHappyPath() throws InterruptedException {
-//        extentTest = extent.createTest("Shop.kz SOME_TEST_CASE_NAME Test");
-//        SomePage somePage = new SomePage(driver);
+    @Test
+    public void registrationTest() throws InterruptedException {
+        extentTest = extent.createTest("Shop.kz Registration Test");
+        RegisterPage registerPage = new RegisterPage(driver);
 //        driver.get(ConfigProperties.getProperty("mainURL"));
-//        Thread.sleep(2000);
-//        somePage.testCase1();
-//
-//        Assert.assertEquals(String actual, String expected); //OR
-//        Assert.assertTrue();
-//    }
-    ////////////////////////////////////////////////////////////////////////////////////////
+//        registerPage.goToSignUpPage();
+//        registerPage.signUp();
 
+//        home.setLocation();
+//        Thread.sleep(2000);
+//        home.setCity();
+//        home.setRegion();
+//        Thread.sleep(2000);
+//        home.setCityName();
+//        Thread.sleep(2000);
+
+//       home.setSearchField();
+//       home.typeKeyword("клавиатура");
+//       Thread.sleep(3000);
+//       home.setKeyboard();
+//       Thread.sleep(3000);
+//        home.setSearchField();
+//        home.tKeyword("macbook");
+//        Thread.sleep(3000);
+
+    }
 
     @AfterTest
     public void tearDown(){
