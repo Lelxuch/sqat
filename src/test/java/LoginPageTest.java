@@ -15,6 +15,7 @@ public class LoginPageTest {
     public static ExtentReports extent;
     public static ExtentHtmlReporter htmlReporter;
     public static ExtentTest extentTest;
+    public static DriverSettings driverSettings = new DriverSettings();
 
     @BeforeTest
     public void setup(){
@@ -26,8 +27,8 @@ public class LoginPageTest {
         extent.setSystemInfo("Hostname", ConfigProperties.getProperty("mainURL"));
         extent.setSystemInfo("Execution Environment", "Staging");
         extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
-        WebDriverManager.chromedriver().setup();
-        driver  = new ChromeDriver();
+        driverSettings.initDriver();
+        driver = driverSettings.getDriver();
     }
 
     @Test
@@ -68,6 +69,6 @@ public class LoginPageTest {
     @AfterTest
     public void tearDown(){
         extent.flush();
-//        driver.quit();
+        driverSettings.closeDriver();
     }
 }
