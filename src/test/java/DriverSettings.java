@@ -15,16 +15,15 @@ public class DriverSettings {
         System.out.println(config);
         switch (config) {
             case "firefox":
-                WebDriverManager.firefoxdriver().setup();
+//                WebDriverManager.firefoxdriver().setup();
                 webDriver.set(new FirefoxDriver());
+                break;
             case "chrome":
-                WebDriverManager.chromedriver().setup();
-                webDriver.set(new ChromeDriver());
             default:
-                WebDriverManager.chromedriver().setup();
+//                WebDriverManager.chromedriver().setup();
                 webDriver.set(new ChromeDriver());
         }
-        webDriver.get().manage().window().fullscreen();
+//        webDriver.get().manage().window().fullscreen();
     }
 
     public WebDriver getDriver() {
