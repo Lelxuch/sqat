@@ -9,6 +9,10 @@
             <class name="LoginPageTest"/>
             <class name="RegisterPageTest"/>
             <class name="MainPageTest"/>
+            <class name="HomePageTest"/>
+            <class name="SearchTest"/>
+            <class name="CartPageTest"/>
+
         </classes>
     </test>
 </suite>

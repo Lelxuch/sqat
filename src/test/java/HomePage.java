@@ -1,6 +1,11 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import utils.ConfigProperties;
+
+import java.sql.SQLOutput;
+import java.util.Locale;
 
 public class HomePage {
     protected WebDriver driver;
@@ -10,13 +15,15 @@ public class HomePage {
     }
 
     private By locationName = By.xpath("//div/div/a[@class='selected']");
-    private By cityName = By.xpath("//body/div[7]/ul[1]/li[3]/a[1]");
+    private By cityName = By.xpath("//div[@class='default_popup choose_city_popup']/ul/li/a[@rel='2']");
     private By regionName = By.xpath("//a[contains(text(),'Акмолинская область')]");
     private By city = By.xpath("//a[contains(text(),'Кокшетау')]");
+
     private By searchField = By.className("search-hover__field");
     private By multiSearch = By.className("multi-input");
-    private By keyboardName = By.xpath("//div[contains(text(),'Клавиатура HyperX Alloy Origins 60, White-Pink, US')]");
-    private By submitButton = By.xpath("//div[@class='multi-layout']/div/button[@class='multi-icon multi-searchIcon']");
+    private By keyboardName = By.xpath("//div[@class='autocomplete-products__item-info']");
+    private By submitButton = By.xpath("//div[@class='multi-header']/button[@class='multi-icon multi-searchIcon']");
+
 
     public void setLocation(){
         driver.findElement(locationName).click();
@@ -48,8 +55,12 @@ public class HomePage {
     }
 
     public void setKeyboard(){
-        driver.findElement(keyboardName).click();
+        String title = driver.findElement(keyboardName).getText();
+        if(title.toLowerCase().contains("клавиатура")){
+            Assert.assertTrue(true);
+        }
 
     }
+
 
 }
