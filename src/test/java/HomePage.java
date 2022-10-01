@@ -1,10 +1,11 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.ConfigProperties;
 
-import java.sql.SQLOutput;
 import java.util.Locale;
 
 public class HomePage {
@@ -21,9 +22,9 @@ public class HomePage {
 
     private By searchField = By.className("search-hover__field");
     private By multiSearch = By.className("multi-input");
+    private By addToCartButton = By.className("bx-owl-item-add-btn");
     private By keyboardName = By.xpath("//div[@class='autocomplete-products__item-info']");
     private By submitButton = By.xpath("//div[@class='multi-header']/button[@class='multi-icon multi-searchIcon']");
-
 
     public void setLocation(){
         driver.findElement(locationName).click();
@@ -41,12 +42,9 @@ public class HomePage {
         driver.findElement(city).click();
     }
 
-
-
     public void setSearchField(){
         WebElement searchBox = driver.findElement(searchField);
         searchBox.click();
-
     }
 
     public void typeKeyword (String keys){
@@ -59,8 +57,11 @@ public class HomePage {
         if(title.toLowerCase().contains("клавиатура")){
             Assert.assertTrue(true);
         }
-
     }
 
-
+    public void pressAddToCartButton() {
+//        WebElement button = driver.findElement(addToCartButton);
+//        System.out.println(button);
+        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
+    }
 }
