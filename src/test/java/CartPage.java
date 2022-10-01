@@ -13,10 +13,12 @@ public class CartPage {
     }
 
     private By cartLinkBy = By.xpath("//a[@href='/personal/basket/']");
+    private By addItem1ToCartBy = By.id("bx_117848907_1303739_add_basket_link");
     private By addToCartBy = By.xpath("//a[@tabindex='0']");
     private By deleteItemBy = By.xpath("//button[@onClick=\"itemBasketDelete(this);\"]");
     private By incrementBy = By.xpath("//button[@onClick=\"changeCount(this, 'plus', 1, 6);\"]");
     private By addedToCartBy = By.xpath("//a[contains(text(), 'В корзине')]");
+    private By emptyCartBy = By.xpath("//p[contains(text(), 'Ваша корзина пуста')]");
     private By itemNameBy = By.xpath("//a[contains(text(), 'Ноутбук ASUS VivoBook Pro 16X M7600QC, OLED (90NB0V81-M01630)')]");
     private By confirmButton = By.className("bx-btn-order");
     private By userLocation = By.xpath("//a[contains(text(), 'Астана')]");
@@ -32,19 +34,24 @@ public class CartPage {
     }
 
     public void addItemToCart(){
-        driver.findElement(addedToCartBy).click();
+        driver.findElement(addItem1ToCartBy).click();
     }
 
     public void goToCart() {
         openCart();
     }
 
-    public boolean isDisplayedItemNameFromCart(){
+    public boolean isDisplayedItemNameFromCart() {
         return driver.findElement(addedToCartBy).isDisplayed();
     }
 
+    public boolean isCartEmpty(){
+        driver.get(ConfigProperties.getProperty("cartURL"));
+        return driver.findElement(emptyCartBy).isDisplayed();
+    }
+
     public String getItemNameFromCart() {
-        openCart();
+        driver.get(ConfigProperties.getProperty("cartURL"));
         WebElement itemName = driver.findElement(itemNameBy);
         return itemName.getText();
     }
