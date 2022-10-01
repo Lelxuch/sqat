@@ -18,9 +18,12 @@ public class MainPage {
     public By minRangeBy = By.id("filter_02_P7_MIN");
     public By maxRangeBy = By.id("filter_02_P7_MAX");
 
-    private By priceAsc = By.xpath("//a[@data-value='price-asc']");
-    private By priceDesc = By.xpath("//a[@data-value='price-desc']");
     public String articulOfItem = null;
+
+    private By addToWishListBy = By.name("towishlist");
+    private By addToComparisonBy = By.xpath("//div[@class='bx_catalog_item_controls_blockthree']/a[2]");
+    private By articulFromWishListBy = By.xpath("//div[@class='g-i-tile-i-art']");
+
 
     public String getRangeValue(By by){
       return driver.findElement(by).getAttribute("value");
@@ -41,10 +44,30 @@ public class MainPage {
     public String getArticulFromDetailPage(){
         return clearStringFromChars(driver.findElement(articulFromDetailPageBy).getText());
     }
+
+    public String getArticulFromWishPage(){
+        return clearStringFromChars(driver.findElement(articulFromWishListBy).getText());
+    }
+
+    public WebElement getProductFromPage(int index){
+        return driver.findElements(itemOnPageBy).get(index);
+    }
+
+    public void addToWishList(){
+        WebElement firstItem = getProductFromPage(0);
+        setArticulOfItem(clearStringFromChars(firstItem.findElement(articulFromMainPageBy).getText()));
+        firstItem.findElement(addToWishListBy).click();
+    }
+
+    public void addToComparison(){
+        WebElement firstItem = getProductFromPage(0);
+        WebElement secondItem = getProductFromPage(1);
+        firstItem.findElement(addToComparisonBy).click();
+        secondItem.findElement(addToComparisonBy).click();
+    }
     public void clickToFirstItemOnPage(){
-        WebElement firstItem = driver.findElements(itemOnPageBy).get(0);
+        WebElement firstItem = getProductFromPage(0);
         WebElement titleOfItem = firstItem.findElement(linkToItemBy);
-        String href = titleOfItem.getAttribute("href");
         setArticulOfItem(clearStringFromChars(firstItem.findElement(articulFromMainPageBy).getText()));
         titleOfItem.click();
     }
