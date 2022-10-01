@@ -17,12 +17,17 @@ public class LoginPage {
     private By loginBtnBy = By.id("login_btn");
     private By profileNameBy = By.xpath("//span[contains(text(), 'Merey Orynbassar')]");
 
-    private By authStatus = By.id("auth-status");
+    private By authStatusBy = By.id("auth-status");
 
     public void openSignIn(){
         driver.findElement(signInLinkBy).click();
     }
 
+    public boolean isAlertDisplayed(){
+        WebElement authStatus = driver.findElement(authStatusBy);
+        String classOfAuthStatus = authStatus.getAttribute("class");
+        return !classOfAuthStatus.contains("hidden");
+    }
     public void clearAd(){
         WebElement ad = driver.findElement(oneTimeBy);
         if(ad.isDisplayed()){

@@ -40,8 +40,7 @@ public class LoginPageTest extends  BasePage{
         loginPage.signInUnhappy("arexoff@mail.com", "12345678");
         Thread.sleep(2000);
 
-        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
-        Assert.assertEquals(loginPage.getProfileName(), fullname);
+        Assert.assertTrue(loginPage.isAlertDisplayed());
     }
 
 
