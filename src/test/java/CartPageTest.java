@@ -10,29 +10,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class CartPageTest {
-    public static WebDriver driver;
-    public static ExtentReports extent;
-    public static ExtentHtmlReporter htmlReporter;
-    public static ExtentTest extentTest;
-
-    @BeforeTest
-    public void setup(){
-        extent = new ExtentReports();
-        String HTML_REPORT_PATH = "target//ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
-        htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
-        extent.attachReporter(htmlReporter);
-        htmlReporter.loadXMLConfig("src/main/resources/extent-config.xml");
-        extent.setSystemInfo("Hostname", ConfigProperties.getProperty("mainURL"));
-        extent.setSystemInfo("Execution Environment", "Staging");
-        extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
-        WebDriverManager.chromedriver().setup();
-        driver  = new ChromeDriver();
-    }
+public class CartPageTest extends BasePage {
 
     @Test
     public void addItemToCart() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Adding Item to Cart Test");
         LoginPage loginPage = new LoginPage(driver);
         CartPage cartPage = new CartPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
@@ -51,7 +32,6 @@ public class CartPageTest {
 
     @Test
     public void deleteItemFromCart() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Deleting Item from Cart Test");
         LoginPage loginPage = new LoginPage(driver);
         CartPage cartPage = new CartPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
@@ -69,9 +49,5 @@ public class CartPageTest {
     }
 
 
-    @AfterTest
-    public void tearDown(){
-        extent.flush();
-//        driver.quit();
-    }
+
 }

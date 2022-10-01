@@ -10,30 +10,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class LoginPageTest {
-    public static WebDriver driver;
-    public static ExtentReports extent;
-    public static ExtentHtmlReporter htmlReporter;
-    public static ExtentTest extentTest;
-    public static DriverSettings driverSettings = new DriverSettings();
-
-    @BeforeTest
-    public void setup(){
-        extent = new ExtentReports();
-        String HTML_REPORT_PATH = "target//ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
-        htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
-        extent.attachReporter(htmlReporter);
-        htmlReporter.loadXMLConfig("src/main/resources/extent-config.xml");
-        extent.setSystemInfo("Hostname", ConfigProperties.getProperty("mainURL"));
-        extent.setSystemInfo("Execution Environment", "Staging");
-        extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
-        driverSettings.initDriver();
-        driver = driverSettings.getDriver();
-    }
+public class LoginPageTest extends  BasePage{
 
     @Test
     public void testHappyPathLogin() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Login Test");
         LoginPage loginPage = new LoginPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
         Thread.sleep(2000);
@@ -50,7 +30,6 @@ public class LoginPageTest {
 
     @Test
     public void testUnHappyPathLogin() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz UnhappyPath Login Test");
         LoginPage loginPage = new LoginPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
         Thread.sleep(2000);
@@ -66,9 +45,4 @@ public class LoginPageTest {
     }
 
 
-    @AfterTest
-    public void tearDown(){
-        extent.flush();
-        driverSettings.closeDriver();
-    }
 }

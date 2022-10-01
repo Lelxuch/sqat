@@ -9,29 +9,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class RegisterPageTest {
-    public static WebDriver driver;
-    public static ExtentReports extent;
-    public static ExtentHtmlReporter htmlReporter;
-    public static ExtentTest extentTest;
-
-    @BeforeTest
-    public void setup(){
-        extent = new ExtentReports();
-        String HTML_REPORT_PATH = "target//ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
-        htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
-        extent.attachReporter(htmlReporter);
-        htmlReporter.loadXMLConfig("src/main/resources/extent-config.xml");
-        extent.setSystemInfo("Hostname", ConfigProperties.getProperty("mainURL"));
-        extent.setSystemInfo("Execution Environment", "Staging");
-        extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
-        WebDriverManager.chromedriver().setup();
-        driver  = new ChromeDriver();
-    }
+public class RegisterPageTest extends BasePage {
 
     @Test
     public void registrationTest() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Registration Test");
         RegisterPage registerPage = new RegisterPage(driver);
 //        driver.get(ConfigProperties.getProperty("mainURL"));
 //        registerPage.goToSignUpPage();
@@ -56,9 +37,4 @@ public class RegisterPageTest {
 
     }
 
-    @AfterTest
-    public void tearDown(){
-        extent.flush();
-        driver.quit();
-    }
 }

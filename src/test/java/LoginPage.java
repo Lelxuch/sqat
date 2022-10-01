@@ -17,6 +17,8 @@ public class LoginPage {
     private By loginBtnBy = By.id("login_btn");
     private By profileNameBy = By.xpath("//span[contains(text(), 'Merey Orynbassar')]");
 
+    private By authStatus = By.id("auth-status");
+
     public void openSignIn(){
         driver.findElement(signInLinkBy).click();
     }

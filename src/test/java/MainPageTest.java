@@ -10,30 +10,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.ConfigProperties;
 
-public class MainPageTest {
-    public static WebDriver driver;
-    public static ExtentReports extent;
-    public static ExtentHtmlReporter htmlReporter;
-    public static ExtentTest extentTest;
-    public static DriverSettings driverSettings = new DriverSettings();
-
-    @BeforeTest
-    public void setup(){
-        extent = new ExtentReports();
-        String HTML_REPORT_PATH = "target//ShopkzAutomationReport" + System.currentTimeMillis() + ".html";
-        htmlReporter = new ExtentHtmlReporter(HTML_REPORT_PATH);
-        extent.attachReporter(htmlReporter);
-        htmlReporter.loadXMLConfig("src/main/resources/extent-config.xml");
-        extent.setSystemInfo("Hostname", ConfigProperties.getProperty("processorsPageURL"));
-        extent.setSystemInfo("Execution Environment", "Staging");
-        extent.setSystemInfo("Browser", ConfigProperties.getProperty("browser"));
-        driverSettings.initDriver();
-        driver = driverSettings.getDriver();
-    }
+public class MainPageTest extends BasePage{
 
     @Test
     public void testRedirectionOfProduct() throws InterruptedException {
-        extentTest = extent.createTest("Shop.kz Redirection Test");
         MainPage mainPage = new MainPage(driver);
         driver.get(ConfigProperties.getProperty("processorsPageURL"));
         Thread.sleep(2000);
@@ -46,7 +26,6 @@ public class MainPageTest {
 
     @Test
     public void testFilterOfRange() throws  InterruptedException{
-        extentTest = extent.createTest("Shop.kz Filter Range Test");
         MainPage mainPage = new MainPage(driver);
         driver.get(ConfigProperties.getProperty("processorsPageURL"));
         Thread.sleep(2000);
@@ -55,9 +34,5 @@ public class MainPageTest {
         Assert.assertEquals(mainPage.getRangeValue(mainPage.minRangeBy),ConfigProperties.getProperty("minRange"));
     }
 
-    @AfterTest
-    public void tearDown(){
-        extent.flush();
-        driver.quit();
-    }
+
 }
