@@ -1,19 +1,14 @@
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pages.LoginPage;
 import utils.ConfigProperties;
+import utils.ExtentManager;
 
 public class LoginPageTest extends  BasePage{
 
     @Test
     public void testHappyPathLogin() throws InterruptedException {
+        ExtentManager.extentTest = ExtentManager.extent.createTest("Shop.kz Success login test");
         LoginPage loginPage = new LoginPage(driver);
         driver.get(ConfigProperties.getProperty("mainURL"));
         Thread.sleep(2000);
@@ -24,7 +19,7 @@ public class LoginPageTest extends  BasePage{
         loginPage.signIn();
         Thread.sleep(2000);
 
-        String fullname = ConfigProperties.getProperty("name") + " " + ConfigProperties.getProperty("surname");
+        String fullname = "Mere" + " " + ConfigProperties.getProperty("surname");
         Assert.assertEquals(loginPage.getProfileName(), fullname);
     }
 

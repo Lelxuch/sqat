@@ -1,12 +1,5 @@
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pages.RegisterPage;
 import utils.ConfigProperties;
 
 public class RegisterPageTest extends BasePage {
@@ -14,9 +7,9 @@ public class RegisterPageTest extends BasePage {
     @Test
     public void registrationTest() throws InterruptedException {
         RegisterPage registerPage = new RegisterPage(driver);
-//        driver.get(ConfigProperties.getProperty("mainURL"));
-//        registerPage.goToSignUpPage();
-//        registerPage.signUp();
+        driver.get(ConfigProperties.getProperty("mainURL"));
+        registerPage.goToSignUpPage();
+        registerPage.signUp();
 
 //        home.setLocation();
 //        Thread.sleep(2000);

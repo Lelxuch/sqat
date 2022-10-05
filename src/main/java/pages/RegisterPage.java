@@ -1,3 +1,5 @@
+package pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,7 +19,7 @@ public class RegisterPage {
     private By phoneFieldBy = By.xpath("//div[@class='bx-authform-input-container']/input[@name='PERSONAL_PHONE']");
     private By passwordFieldBy = By.xpath("//div[@class='bx-authform-input-container']/input[@id='REG_USER_PASSWORD']");
     private By passwordConfirmBy = By.xpath("//div[@class='bx-authform-input-container']/input[@name='USER_CONFIRM_PASSWORD']");
-    private By registerButtonBy = By.xpath("//div[@class='bx-authform-formgroup-container']/input[@name='Register']");
+    private By registerButtonBy = By.xpath("//input[@name='Register']");
 
     public void goToSignUpPage(){
         driver.findElement(registerLinkBy).click();
@@ -25,17 +27,17 @@ public class RegisterPage {
 
     public void signUp(){
         WebElement nameField = driver.findElement(nameFieldBy);
-        nameField.sendKeys(ConfigProperties.getProperty(""));
+        nameField.sendKeys(ConfigProperties.getProperty("name"));
         WebElement surnameField = driver.findElement(surnameFieldBy);
-        surnameField.sendKeys(ConfigProperties.getProperty(""));
+        surnameField.sendKeys(ConfigProperties.getProperty("surname"));
         WebElement emailField = driver.findElement(emailFieldBy);
-        emailField.sendKeys(ConfigProperties.getProperty(""));
+        emailField.sendKeys(ConfigProperties.getProperty("email"));
         WebElement phoneField = driver.findElement(phoneFieldBy);
-        phoneField.sendKeys(ConfigProperties.getProperty(""));
+        phoneField.sendKeys(ConfigProperties.getProperty("phone"));
         WebElement passwordField = driver.findElement(passwordFieldBy);
-        passwordField.sendKeys(ConfigProperties.getProperty(""));
+        passwordField.sendKeys(ConfigProperties.getProperty("password"));
         WebElement passwordConfirmField = driver.findElement(passwordConfirmBy);
-        passwordConfirmField.sendKeys(ConfigProperties.getProperty(""));
+        passwordConfirmField.sendKeys(ConfigProperties.getProperty("password"));
         driver.findElement(registerButtonBy).click();
     }
 

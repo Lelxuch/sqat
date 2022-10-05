@@ -2,11 +2,13 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pages.CartPage;
+import pages.LoginPage;
 import utils.ConfigProperties;
+import utils.DriverSettings;
 
 public class BuyProcessTest {
     public static WebDriver driver;
