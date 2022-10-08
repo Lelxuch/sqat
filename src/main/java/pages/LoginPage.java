@@ -1,9 +1,12 @@
 package pages;
 
+import org.apache.poi.ss.usermodel.Sheet;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utils.ConfigProperties;
+
+import static utils.ExcelRead.workbook;
 
 public class LoginPage {
     protected WebDriver driver;
@@ -38,10 +41,11 @@ public class LoginPage {
     }
 
     public void signIn(){
+        Sheet sheet = workbook.getSheet("Account_data");
         WebElement emailField = driver.findElement(emailBy);
-        emailField.sendKeys(ConfigProperties.getProperty("email"));
+        emailField.sendKeys(sheet.getRow(1).getCell(4).getStringCellValue());
         WebElement passwordField = driver.findElement(passwordBy);
-        passwordField.sendKeys(ConfigProperties.getProperty("password"));
+        passwordField.sendKeys(sheet.getRow(1).getCell(5).getStringCellValue());
         driver.findElement(loginBtnBy).click();
     }
 

@@ -1,16 +1,21 @@
+import org.apache.poi.ss.usermodel.Sheet;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.ConfigProperties;
 import utils.ExtentManager;
 
+import static utils.ExcelRead.workbook;
+
 public class LoginPageTest extends  BasePage{
 
     @Test
     public void testHappyPathLogin() throws InterruptedException {
-        ExtentManager.extentTest = ExtentManager.extent.createTest("Shop.kz Success login test");
+//        ExtentManager.extentTest = ExtentManager.extent.createTest("Shop.kz Success login test");
         LoginPage loginPage = new LoginPage(driver);
-        driver.get(ConfigProperties.getProperty("mainURL"));
+//        driver.get(ConfigProperties.getProperty("mainURL"));
+        Sheet sheet = workbook.getSheet("URLs");
+        driver.get(sheet.getRow(1).getCell(1).getStringCellValue());
         Thread.sleep(2000);
         loginPage.clearAd();
         Thread.sleep(1000);
@@ -19,14 +24,18 @@ public class LoginPageTest extends  BasePage{
         loginPage.signIn();
         Thread.sleep(2000);
 
-        String fullname = "Mere" + " " + ConfigProperties.getProperty("surname");
+        sheet = workbook.getSheet("Account_data");
+
+        String fullname = sheet.getRow(1).getCell(1).getStringCellValue() + " " + sheet.getRow(1).getCell(2).getStringCellValue();
         Assert.assertEquals(loginPage.getProfileName(), fullname);
     }
 
     @Test
     public void testUnHappyPathLogin() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
-        driver.get(ConfigProperties.getProperty("mainURL"));
+//        driver.get(ConfigProperties.getProperty("mainURL"));
+        Sheet sheet = workbook.getSheet("URLs");
+        driver.get(sheet.getRow(1).getCell(1).getStringCellValue());
         Thread.sleep(2000);
         loginPage.clearAd();
         Thread.sleep(1000);
