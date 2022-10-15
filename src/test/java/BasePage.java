@@ -7,6 +7,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import utils.ConfigProperties;
+import utils.Database;
 import utils.DriverSettings;
 import utils.ExtentManager;
 
@@ -35,6 +36,9 @@ public class BasePage {
         driverSettings.initDriver();
         driver = driverSettings.getDriver();
         driver.get(ConfigProperties.getProperty("mainURL"));
+        Database db = new Database();
+        db.getConnection();
+        db.createTestingTable();
     }
 
     @AfterMethod
@@ -47,7 +51,7 @@ public class BasePage {
         TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
         File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
 //        String destination = System.getProperty("user.dir")+"\\ScreenShot\\"+filename+".png";
-        String destination = "target//ScreenShorts"+  ".jpeg";
+        String destination = "target//ScreenShorts"+filename+".jpeg";
         File finalDestinatiom= new File(destination);
         try {
             FileUtils.copyFile(source, finalDestinatiom);
