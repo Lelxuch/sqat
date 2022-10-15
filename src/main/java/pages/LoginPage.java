@@ -5,6 +5,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utils.ConfigProperties;
+import utils.Database;
+import utils.DatabaseReader;
+
+import java.sql.Connection;
 
 import static utils.ExcelRead.workbook;
 
@@ -41,11 +45,15 @@ public class LoginPage {
     }
 
     public void signIn(){
+        Database db = new Database();
+        DatabaseReader databaseReader = new DatabaseReader(db);
+        String email = databaseReader.readParam("email");
+        String password = databaseReader.readParam("password");
         Sheet sheet = workbook.getSheet("Account_data");
         WebElement emailField = driver.findElement(emailBy);
-        emailField.sendKeys(sheet.getRow(1).getCell(4).getStringCellValue());
+        emailField.sendKeys(email);
         WebElement passwordField = driver.findElement(passwordBy);
-        passwordField.sendKeys(sheet.getRow(1).getCell(5).getStringCellValue());
+        passwordField.sendKeys(password);
         driver.findElement(loginBtnBy).click();
     }
 

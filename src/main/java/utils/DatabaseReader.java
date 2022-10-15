@@ -40,8 +40,9 @@ public class DatabaseReader {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    System.out.println(resultSet);
-                    return ("resultSet");
+                    String value = resultSet.getString("value");
+                    System.out.println(value);
+                    return (value);
 //                    return keyRowMapper.apply(resultSet).getValue();
                 } else {
                     return null;

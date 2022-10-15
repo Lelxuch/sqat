@@ -41,16 +41,21 @@ public class Database {
             String sql = String.format("""
                     CREATE TABLE IF NOT EXISTS %s (
                         name VARCHAR(255),
-                        date DATETIME,
+                        date TIMESTAMP,
                         status VARCHAR(30)
                     );
+                 
+                    """, table_name);
+            String sql2 = String.format("""
                     CREATE TABLE IF NOT EXISTS %s (
-                        key TEXT,
-                        VALUE TEXT,
-                    );
-                    """, table_name, keys_table_name);
+                                            key TEXT,
+                                            VALUE TEXT
+                                        );
+                    """,keys_table_name);
             System.out.println(sql);
             stmt.executeUpdate(sql);
+            System.out.println(sql2);
+            stmt.executeUpdate(sql2);
             System.out.println("Created table in given database...");
         } catch (SQLException e) {
             e.printStackTrace();
