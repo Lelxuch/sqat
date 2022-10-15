@@ -15,6 +15,12 @@ public class Database {
 
     public Connection getConnection(){
         try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("PostgreSQL JDBC Driver is not found. Include it in your library path ");
+            e.printStackTrace();
+        }
+        try {
             connection = DriverManager
                     .getConnection(ConfigProperties.getProperty("db_url"),
                                     ConfigProperties.getProperty("db_username"),
@@ -31,13 +37,18 @@ public class Database {
             Statement stmt = connection.createStatement();
         ) {
             String table_name = ConfigProperties.getProperty("table_name");
+            String keys_table_name = ConfigProperties.getProperty("keys_table_name");
             String sql = String.format("""
                     CREATE TABLE IF NOT EXISTS %s (
-                    name VARCHAR(255),
-                    date DATETIME,
-                    status VARCHAR(30)
+                        name VARCHAR(255),
+                        date DATETIME,
+                        status VARCHAR(30)
                     );
-                    """, table_name);
+                    CREATE TABLE IF NOT EXISTS %s (
+                        key TEXT,
+                        VALUE TEXT,
+                    );
+                    """, table_name, keys_table_name);
             System.out.println(sql);
             stmt.executeUpdate(sql);
             System.out.println("Created table in given database...");
