@@ -34,7 +34,7 @@ public class Database {
             String sql = String.format("""
                     CREATE TABLE IF NOT EXISTS %s (
                     name VARCHAR(255),
-                    date DATETIME,
+                    date TIMESTAMP,
                     status VARCHAR(30)
                     );
                     """, table_name);
