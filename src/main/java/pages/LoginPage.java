@@ -58,6 +58,14 @@ public class LoginPage {
         driver.findElement(loginBtnBy).click();
     }
 
+    public void signInWithCredentials(String username, String password){
+        WebElement emailField = driver.findElement(emailBy);
+        emailField.sendKeys(username);
+        WebElement passwordField = driver.findElement(passwordBy);
+        passwordField.sendKeys(password);
+        driver.findElement(loginBtnBy).click();
+    }
+
     public void signInUnhappy(String nameKey, String surnameKey){
         WebElement emailField = driver.findElement(emailBy);
         emailField.sendKeys(nameKey);

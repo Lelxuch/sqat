@@ -32,9 +32,9 @@ public class FirstStepDef {
         loginPage.clearAd();
         loginPage.openSignIn();
     }
-    @Then("Enter user credentials.")
-    public void enter_user_credentials() {
-        loginPage.signIn();
+    @Then("Enter user credentials using username {string} and password as {string}.")
+    public void enterUserCredentialsUsingUsernameAndPasswordAs(String username, String password) {
+        loginPage.signInWithCredentials(username, password);
     }
     @Then("Click login and verify account name.")
     public void click_login_and_verify_account_name() throws InterruptedException {

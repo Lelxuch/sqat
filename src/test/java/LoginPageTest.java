@@ -20,7 +20,7 @@ public class LoginPageTest extends  BasePage{
 //        driver.get(ConfigProperties.getProperty("mainURL"));
             Sheet sheet = workbook.getSheet("URLs");
             driver.get(sheet.getRow(1).getCell(1).getStringCellValue());
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             loginPage.clearAd();
             Thread.sleep(1000);
             loginPage.openSignIn();
