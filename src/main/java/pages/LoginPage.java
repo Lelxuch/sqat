@@ -37,7 +37,8 @@ public class LoginPage {
         String classOfAuthStatus = authStatus.getAttribute("class");
         return !classOfAuthStatus.contains("hidden");
     }
-    public void clearAd(){
+    public void clearAd() throws InterruptedException {
+        Thread.sleep(2000);
         WebElement ad = driver.findElement(oneTimeBy);
         if(ad.isDisplayed()){
             ad.click();
@@ -45,15 +46,15 @@ public class LoginPage {
     }
 
     public void signIn(){
-        Database db = new Database();
-        DatabaseReader databaseReader = new DatabaseReader(db);
-        String email = databaseReader.readParam("email");
-        String password = databaseReader.readParam("password");
+//        Database db = new Database();
+//        DatabaseReader databaseReader = new DatabaseReader(db);
+//        String email = databaseReader.readParam("email");
+//        String password = databaseReader.readParam("password");
         Sheet sheet = workbook.getSheet("Account_data");
         WebElement emailField = driver.findElement(emailBy);
-        emailField.sendKeys(email);
+        emailField.sendKeys(sheet.getRow(1).getCell(4).getStringCellValue());
         WebElement passwordField = driver.findElement(passwordBy);
-        passwordField.sendKeys(password);
+        passwordField.sendKeys(sheet.getRow(1).getCell(5).getStringCellValue());
         driver.findElement(loginBtnBy).click();
     }
 
